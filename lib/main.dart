@@ -48,18 +48,10 @@ class InsuranceApp extends StatelessWidget {
           // Auth Bloc
           BlocProvider<AuthBloc>(
             create: (context) => AuthBloc(
-              loginUseCase: LoginUseCase(
-                repository: context.read<AuthRepository>(),
-              ),
-              registerUseCase: RegisterUseCase(
-                repository: context.read<AuthRepository>(),
-              ),
-              logoutUseCase: LogoutUseCase(
-                repository: context.read<AuthRepository>(),
-              ),
-              checkAuthStatusUseCase: CheckAuthStatusUseCase(
-                repository: context.read<AuthRepository>(),
-              ),
+              loginUseCase: LoginUseCase(context.read<AuthRepository>()),
+              registerUseCase: RegisterUseCase(context.read<AuthRepository>()),
+              logoutUseCase: LogoutUseCase(context.read<AuthRepository>()),
+              checkAuthStatusUseCase: CheckAuthStatusUseCase(context.read<AuthRepository>()),
             )..add(CheckAuthStatus()),
           ),
         ],

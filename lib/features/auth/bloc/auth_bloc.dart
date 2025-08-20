@@ -5,7 +5,7 @@ import '../domain/usecases/login_usecase.dart';
 import '../domain/usecases/register_usecase.dart';
 import '../domain/usecases/logout_usecase.dart';
 import '../domain/usecases/check_auth_status_usecase.dart';
-import '../../shared/models/user_model.dart';
+import '../../../shared/models/user_model.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

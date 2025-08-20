@@ -29,7 +29,7 @@ class AppTheme {
       ),
       
       // Card Theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -142,7 +142,7 @@ class AppTheme {
       // Chip Theme
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.surface,
-        selectedColor: AppColors.primary.withOpacity(0.1),
+        selectedColor: AppColors.primary.withAlpha(26),
         labelStyle: GoogleFonts.poppins(fontSize: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -177,7 +177,7 @@ class AppTheme {
       ),
       
       // Card Theme
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 2,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -290,7 +290,7 @@ class AppTheme {
       // Chip Theme
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.darkSurface,
-        selectedColor: AppColors.primary.withOpacity(0.1),
+        selectedColor: AppColors.primary.withAlpha(26),
         labelStyle: GoogleFonts.poppins(fontSize: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),

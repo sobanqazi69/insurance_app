@@ -15,7 +15,7 @@ class NetworkInfoImpl implements NetworkInfo {
     try {
       final connectivityResult = await connectivity.checkConnectivity();
       
-      if (connectivityResult == ConnectivityResult.none) {
+      if (connectivityResult.isEmpty || connectivityResult.contains(ConnectivityResult.none)) {
         return false;
       }
       
