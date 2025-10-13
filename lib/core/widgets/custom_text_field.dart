@@ -12,6 +12,8 @@ class CustomTextField extends StatefulWidget {
   final bool enabled;
   final int maxLines;
   final VoidCallback? onTap;
+  final bool? filled;
+  final Color? borderColor;
 
   const CustomTextField({
     super.key,
@@ -25,6 +27,8 @@ class CustomTextField extends StatefulWidget {
     this.enabled = true,
     this.maxLines = 1,
     this.onTap,
+    this.filled,
+    this.borderColor,
   });
 
   @override
@@ -54,11 +58,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
+          borderSide: widget.borderColor != null 
+              ? BorderSide(color: widget.borderColor!, width: 1)
+              : BorderSide.none,
         ) ,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide.none,
+          borderSide: widget.borderColor != null 
+              ? BorderSide(color: widget.borderColor!, width: 1)
+              : BorderSide.none,
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -81,8 +89,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           height: 1.2,
         ),
         
-        filled: true,
-        fillColor: AppColors.pureWhite,
+        filled: widget.filled ?? true,
+        fillColor: widget.filled == false ? Colors.transparent : AppColors.pureWhite,
         prefixIcon: widget.prefixIcon != null 
             ? Padding(
                 padding: const EdgeInsets.only(left: 20, right: 12),

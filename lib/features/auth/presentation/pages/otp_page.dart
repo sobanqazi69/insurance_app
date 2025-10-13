@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
+import '../../../../core/widgets/custom_text_field.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
@@ -179,34 +180,13 @@ class _OtpPageState extends State<OtpPage> {
                       const SizedBox(height: 8),
                       
                       // OTP Input
-                      Container(
-                      
-                        child: TextFormField(
-                          controller: _otpController,
-                          keyboardType: TextInputType.number,
-                          maxLength: 8,
-                          validator: _validateOtp,
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            color: AppColors.textPrimary,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 2,
-                          ),
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            filled: false,
-                            hintText: '00000000',
-                            hintStyle: GoogleFonts.poppins(
-                              color: AppColors.textTertiary,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 2,
-                            ),
-                            border: InputBorder.none,
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-                            counterText: '', // Hide character counter
-                          ),
-                        ),
+                      CustomTextField(
+                        hintText: '00000000',
+                        controller: _otpController,
+                        keyboardType: TextInputType.number,
+                        validator: _validateOtp,
+                        filled: false,
+                        borderColor: Colors.black,
                       ),
                     ],
                   ),

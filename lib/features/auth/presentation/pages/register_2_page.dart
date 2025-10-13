@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
+import '../../../../core/widgets/custom_text_field.dart';
 import 'otp_page.dart';
 
 class Register2Page extends StatefulWidget {
@@ -167,10 +168,12 @@ class _Register2PageState extends State<Register2Page> {
                             const SizedBox(width: 12),
                             // Phone Number Input
                             Expanded(
-                              child: _buildTextField(
+                              child: CustomTextField(
                                 hintText: '03',
                                 controller: _phoneController,
                                 keyboardType: TextInputType.phone,
+                                filled: false,
+                                borderColor: Colors.black,
                               ),
                             ),
                           ],
@@ -181,10 +184,12 @@ class _Register2PageState extends State<Register2Page> {
                         // CNIC Field
                         _buildFieldLabel('CNIC *'),
                         const SizedBox(height: 8),
-                        _buildTextField(
+                        CustomTextField(
                           hintText: '#####-#######-#',
                           controller: _cnicController,
                           keyboardType: TextInputType.text,
+                          filled: false,
+                          borderColor: Colors.black,
                         ),
                         
                         const SizedBox(height: 24),
@@ -192,11 +197,13 @@ class _Register2PageState extends State<Register2Page> {
                         // Date of Birth Field
                         _buildFieldLabel('Data of birth *'),
                         const SizedBox(height: 8),
-                        _buildTextField(
+                        CustomTextField(
                           hintText: 'mm - day -year',
                           controller: _dateOfBirthController,
                           keyboardType: TextInputType.text,
                           onTap: _selectDateOfBirth,
+                          filled: false,
+                          borderColor: Colors.black,
                           suffixIcon: const Icon(
                             Icons.calendar_today,
                             color: AppColors.textSecondary,
@@ -228,10 +235,12 @@ class _Register2PageState extends State<Register2Page> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        _buildTextField(
+                        CustomTextField(
                           hintText: 'Enter your password',
                           controller: _passwordController,
                           isPassword: true,
+                          filled: false,
+                          borderColor: Colors.black,
                         ),
                         
                         const SizedBox(height: 40),
@@ -309,50 +318,4 @@ class _Register2PageState extends State<Register2Page> {
     );
   }
 
-  Widget _buildTextField({
-    required String hintText,
-    required TextEditingController controller,
-    TextInputType keyboardType = TextInputType.text,
-    bool isPassword = false,
-    VoidCallback? onTap,
-    Widget? suffixIcon,
-  }) {
-    return Container(
-      // height: 56,
-      // decoration: BoxDecoration(
-      //   color: AppColors.pureWhite,
-      //   borderRadius: BorderRadius.circular(12),
-      //   border: Border.all(color: AppColors.border, width: 1),
-      // ),
-        child: TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          obscureText: isPassword,
-          onTap: onTap,
-          readOnly: onTap != null,
-        style: GoogleFonts.poppins(
-          fontSize: 16,
-          color: AppColors.textPrimary,
-          fontWeight: FontWeight.w400,
-        ),
-        decoration: InputDecoration(
-          filled: false,
-          hintText: hintText,
-          hintStyle: GoogleFonts.poppins(
-            color: AppColors.textTertiary,
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-          ),
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          suffixIcon: suffixIcon != null
-              ? Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: suffixIcon,
-                )
-              : null,
-        ),
-      ),
-    );
-  }
 }
