@@ -81,6 +81,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           height: 1.2,
         ),
         
+        filled: true,
         fillColor: AppColors.pureWhite,
         prefixIcon: widget.prefixIcon != null 
             ? Padding(

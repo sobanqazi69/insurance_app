@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/colors.dart';
@@ -8,7 +7,7 @@ import '../../../../core/widgets/auth_background.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/social_login_button.dart';
-import '../../bloc/auth_bloc.dart';
+import 'register_2_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -37,26 +36,15 @@ class _RegisterPageState extends State<RegisterPage> {
   void _handleSignUp() {
     try {
       if (_formKey.currentState!.validate()) {
-        setState(() {
-          _isLoading = true;
-        });
-        
-        // TODO: Implement sign up logic
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Sign up functionality coming soon!'),
-            backgroundColor: AppColors.info,
+        // Navigate to register_2 page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Register2Page(),
           ),
         );
-        
-        setState(() {
-          _isLoading = false;
-        });
       }
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(AppStrings.unknownError),

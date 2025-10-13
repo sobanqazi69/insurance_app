@@ -12,6 +12,10 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
   static const Color offWhite = Color(0xFFFAFAFA);
   
+  // Gradient Colors
+  static const Color gradientStart = Color(0xFFE8F4FD);
+  static const Color gradientEnd = Color(0xFFFFFFFF);
+  
   // Text Colors
   static const Color textPrimary = Color(0xFF1E293B);
   static const Color textSecondary = Color(0xFF64748B);
