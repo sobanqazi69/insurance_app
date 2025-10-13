@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/widgets/custom_text_field.dart';
+import '../../../../shared/services/navigation_service.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});
@@ -55,13 +56,8 @@ class _OtpPageState extends State<OtpPage> {
           _isLoading = true;
         });
         
-        // TODO: Implement OTP verification logic
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('OTP verified successfully!'),
-            backgroundColor: AppColors.success,
-          ),
-        );
+        // Navigate to success page with haptic feedback
+        NavigationService.goToSuccess(context);
         
         setState(() {
           _isLoading = false;

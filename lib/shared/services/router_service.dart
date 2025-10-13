@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/auth/presentation/pages/register_2_page.dart';
+import '../../features/auth/presentation/pages/otp_page.dart';
+import '../../features/auth/presentation/pages/success_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/policies/presentation/pages/policies_page.dart';
@@ -20,6 +23,9 @@ class RouterService {
       final isAuthenticated = authBloc.state is AuthAuthenticated;
       final isAuthRoute = state.matchedLocation == '/login' || 
                          state.matchedLocation == '/register' ||
+                         state.matchedLocation == '/register-2' ||
+                         state.matchedLocation == '/otp' ||
+                         state.matchedLocation == '/success' ||
                          state.matchedLocation == '/';
       
       // If user is not authenticated and trying to access protected route
@@ -52,6 +58,21 @@ class RouterService {
         path: '/register',
         name: 'register',
         builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/register-2',
+        name: 'register-2',
+        builder: (context, state) => const Register2Page(),
+      ),
+      GoRoute(
+        path: '/otp',
+        name: 'otp',
+        builder: (context, state) => const OtpPage(),
+      ),
+      GoRoute(
+        path: '/success',
+        name: 'success',
+        builder: (context, state) => const SuccessPage(),
       ),
       
       // Main App Routes

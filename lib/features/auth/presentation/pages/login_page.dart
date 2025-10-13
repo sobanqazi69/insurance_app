@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:insurance_app/features/auth/presentation/pages/register_page.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
@@ -9,6 +8,7 @@ import '../../../../core/widgets/auth_background.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/social_login_button.dart';
+import '../../../../shared/services/navigation_service.dart';
 import '../../bloc/auth_bloc.dart'; 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -122,13 +122,8 @@ class _LoginPageState extends State<LoginPage> {
             setState(() {
               _isLoading = false;
             });
-            // TODO: Navigate to home page
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Login successful!'),
-                backgroundColor: AppColors.success,
-              ),
-            );
+            // Navigate to home page with haptic feedback
+            NavigationService.goToHome(context);
           }
         } catch (e) {
           setState(() {
@@ -323,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(width: 4),
                           TextButton(
                             onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                              NavigationService.goToRegister(context);
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,

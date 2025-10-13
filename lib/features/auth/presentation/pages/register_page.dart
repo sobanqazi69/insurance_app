@@ -7,7 +7,7 @@ import '../../../../core/widgets/auth_background.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_text_field.dart';
 import '../../../../core/widgets/social_login_button.dart';
-import 'register_2_page.dart';
+import '../../../../shared/services/navigation_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -36,13 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
   void _handleSignUp() {
     try {
       if (_formKey.currentState!.validate()) {
-        // Navigate to register_2 page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Register2Page(),
-          ),
-        );
+        // Navigate to register_2 page with haptic feedback
+        NavigationService.goToRegister2(context);
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -304,8 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const SizedBox(width: 4),
                         TextButton(
                           onPressed: () {
-                            // TODO: Navigate to login page
-                            Navigator.pop(context);
+                            NavigationService.goToLogin(context);
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,

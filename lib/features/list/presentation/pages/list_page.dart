@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ListPage extends StatelessWidget {
+  const ListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +14,13 @@ class ProfilePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.person_outline,
+              Icons.list_alt,
               size: 80,
               color: AppColors.primary,
             ),
             const SizedBox(height: 24),
             Text(
-              'Profile Page',
+              'List Page',
               style: GoogleFonts.inter(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -29,7 +29,7 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Manage your account settings and preferences',
+              'Your insurance policies and claims will appear here',
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,

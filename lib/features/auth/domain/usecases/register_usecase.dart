@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
+import '../../../../shared/models/user_model.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUseCase {
@@ -7,9 +8,17 @@ class RegisterUseCase {
 
   RegisterUseCase(this.repository);
 
-  Future<Either<Failure, dynamic>> call(RegisterParams params) async {
-    // Placeholder implementation
-    return const Right(null);
+  Future<Either<Failure, UserModel>> call(RegisterParams params) async {
+    try {
+      return await repository.register(
+        params.email, 
+        params.password, 
+        params.firstName, 
+        params.lastName
+      );
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
+    }
   }
 }
 

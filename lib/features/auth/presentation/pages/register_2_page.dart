@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/strings.dart';
 import '../../../../core/widgets/custom_text_field.dart';
-import 'otp_page.dart';
+import '../../../../shared/services/navigation_service.dart';
 
 class Register2Page extends StatefulWidget {
   const Register2Page({super.key});
@@ -36,13 +36,8 @@ class _Register2PageState extends State<Register2Page> {
         _isLoading = true;
       });
       
-      // Navigate to OTP page
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const OtpPage(),
-        ),
-      );
+      // Navigate to OTP page with haptic feedback
+      NavigationService.goToOtp(context);
       
       setState(() {
         _isLoading = false;
@@ -98,6 +93,8 @@ class _Register2PageState extends State<Register2Page> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
