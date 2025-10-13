@@ -77,7 +77,7 @@ class RouterService {
       
       // Main App Routes
       ShellRoute(
-        builder: (context, state, child) => MainLayout(child: child),
+        builder: (context, state, child) => child,
         routes: [
           GoRoute(
             path: '/home',
@@ -111,83 +111,6 @@ class RouterService {
   );
 }
 
-class MainLayout extends StatelessWidget {
-  final Widget child;
-  
-  const MainLayout({super.key, required this.child});
-  
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _getCurrentIndex(context),
-        onTap: (index) => _onTabTapped(context, index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.policy),
-            label: 'Policies',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment),
-            label: 'Claims',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payment),
-            label: 'Payments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-  
-  int _getCurrentIndex(BuildContext context) {
-    final location = GoRouterState.of(context).matchedLocation;
-    switch (location) {
-      case '/home':
-        return 0;
-      case '/policies':
-        return 1;
-      case '/claims':
-        return 2;
-      case '/payments':
-        return 3;
-      case '/profile':
-        return 4;
-      default:
-        return 0;
-    }
-  }
-  
-  void _onTabTapped(BuildContext context, int index) {
-    switch (index) {
-      case 0:
-        context.go('/home');
-        break;
-      case 1:
-        context.go('/policies');
-        break;
-      case 2:
-        context.go('/claims');
-        break;
-      case 3:
-        context.go('/payments');
-        break;
-      case 4:
-        context.go('/profile');
-        break;
-    }
-  }
-}
 
 class ErrorPage extends StatelessWidget {
   final Exception? error;

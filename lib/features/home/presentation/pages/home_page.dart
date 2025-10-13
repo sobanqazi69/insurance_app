@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_bottom_nav_bar.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../list/presentation/pages/list_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 
@@ -25,6 +26,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: _currentIndex == 1 ? CustomAppBar(
+        userName: 'Pavan',
+        onDrawerTap: () {
+          // Handle drawer tap
+          Scaffold.of(context).openDrawer();
+        },
+      ) : null,
       body: _pages[_currentIndex],
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
@@ -43,9 +51,9 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
+    return Container(
+      color: Colors.white,
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -84,7 +84,7 @@ class CustomBottomNavBar extends StatelessWidget {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                isActive ? AppColors.primary : const Color(0xFF9E9E9E),
+                isActive ? AppColors.cyan : Colors.black,
                 BlendMode.srcIn,
               ),
             ),
