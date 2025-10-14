@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:device_preview/device_preview.dart';
 
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
@@ -26,7 +26,12 @@ void main() async {
   // Initialize SharedPreferences
   await SharedPreferences.getInstance();
   
-  runApp(const InsuranceApp());
+  runApp(
+    DevicePreview(
+      enabled: true, // Set to false for production
+      builder: (context) => const InsuranceApp(),
+    ),
+  );
 }
 
 class InsuranceApp extends StatelessWidget {
@@ -67,12 +72,9 @@ class InsuranceApp extends StatelessWidget {
               darkTheme: AppTheme.darkTheme,
               themeMode: ThemeMode.system,
               routerConfig: RouterService.router,
-              builder: (context, child) {
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: child!,
-                );
-              },
+              useInheritedMediaQuery: true,
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
             );
           },
         ),

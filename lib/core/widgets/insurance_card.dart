@@ -24,11 +24,15 @@ class InsuranceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       final screenWidth = MediaQuery.of(context).size.width;
+      final screenHeight = MediaQuery.of(context).size.height;
       final cardWidth = screenWidth * 0.85;
+      final cardHeight = screenHeight * 0.35;
+      final padding = screenHeight * 0.025;
       
       return Container(
         width: cardWidth,
-        margin: const EdgeInsets.only(right: 16),
+        height: cardHeight,
+        margin: EdgeInsets.only(right: screenWidth * 0.04),
         decoration: BoxDecoration(
           color: AppColors.cardBackground,
           borderRadius: BorderRadius.circular(12),
@@ -45,15 +49,20 @@ class InsuranceCard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 5),
+          padding: EdgeInsets.only(
+            top: padding,
+            left: padding,
+            right: padding,
+            bottom: padding * 0.25,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildHeader(),
-              const SizedBox(height: 20),
-              _buildInfoSection(),
-              const SizedBox(height: 20),
-              _buildActionButtons(),
+              _buildHeader(context),
+              SizedBox(height: padding),
+              _buildInfoSection(context),
+              SizedBox(height: padding),
+              _buildActionButtons(context),
             ],
           ),
         ),
@@ -79,12 +88,15 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final screenWidth = MediaQuery.of(context).size.width;
+      
       return Row(
         children: [
-          _buildCompanyIcon(),
-          const SizedBox(width: 12),
+          _buildCompanyIcon(context),
+          SizedBox(width: screenWidth * 0.03),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +104,7 @@ class InsuranceCard extends StatelessWidget {
                 Text(
                   companyName.split(' ').take(2).join(' '),
                   style: GoogleFonts.inter(
-                    fontSize: 16,
+                    fontSize: screenHeight * 0.02,
                     fontWeight: FontWeight.w600,
                     color: AppColors.iconDark,
                   ),
@@ -101,7 +113,7 @@ class InsuranceCard extends StatelessWidget {
                   Text(
                     companyName.split(' ').skip(2).join(' '),
                     style: GoogleFonts.inter(
-                      fontSize: 16,
+                      fontSize: screenHeight * 0.02,
                       fontWeight: FontWeight.w600,
                       color: AppColors.iconDark,
                     ),
@@ -109,7 +121,7 @@ class InsuranceCard extends StatelessWidget {
               ],
             ),
           ),
-          _buildPremiumTag(),
+          _buildPremiumTag(context),
         ],
       );
     } catch (e) {
@@ -118,11 +130,14 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildCompanyIcon() {
+  Widget _buildCompanyIcon(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final iconSize = screenHeight * 0.05;
+      
       return Container(
-        width: 40,
-        height: 40,
+        width: iconSize,
+        height: iconSize,
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
@@ -191,10 +206,16 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildPremiumTag() {
+  Widget _buildPremiumTag(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final screenWidth = MediaQuery.of(context).size.width;
+      
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.02,
+          vertical: screenHeight * 0.005,
+        ),
         decoration: BoxDecoration(
           color: AppColors.premiumTag,
           borderRadius: BorderRadius.circular(6),
@@ -205,7 +226,7 @@ class InsuranceCard extends StatelessWidget {
             Text(
               premiumAmount,
               style: GoogleFonts.poppins(
-                fontSize: 15,
+                fontSize: screenHeight * 0.018,
                 fontWeight: FontWeight.w700,
                 color: AppColors.white,
               ),
@@ -213,7 +234,7 @@ class InsuranceCard extends StatelessWidget {
             Text(
               'Premium',
               style: GoogleFonts.poppins(
-                fontSize: 12,
+                fontSize: screenHeight * 0.014,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.w400,
                 color: AppColors.white,
@@ -228,10 +249,12 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildInfoSection() {
+  Widget _buildInfoSection(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      
       return Container(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(screenHeight * 0.015),
         decoration: BoxDecoration(
           color: AppColors.cardInfoBackground,
           borderRadius: BorderRadius.circular(8),
@@ -239,13 +262,13 @@ class InsuranceCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: _buildInfoItem(monthlyAmount, 'Monthly'),
+              child: _buildInfoItem(context, monthlyAmount, 'Monthly'),
             ),
             Expanded(
-              child: _buildInfoItem(workshopCount, 'Workshop'),
+              child: _buildInfoItem(context, workshopCount, 'Workshop'),
             ),
             Expanded(
-              child: _buildInfoItem(workshopCount, 'Workshop'),
+              child: _buildInfoItem(context, workshopCount, 'Workshop'),
             ),
           ],
         ),
@@ -256,24 +279,26 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildInfoItem(String value, String label) {
+  Widget _buildInfoItem(BuildContext context, String value, String label) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             value,
             style: GoogleFonts.inter(
-              fontSize: 16,
+              fontSize: screenHeight * 0.02,
               fontWeight: FontWeight.w700,
               color: AppColors.iconDark,
             ),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: screenHeight * 0.002),
           Text(
             label,
             style: GoogleFonts.inter(
-              fontSize: 12,
+              fontSize: screenHeight * 0.014,
               fontWeight: FontWeight.w400,
               color: AppColors.iconDark,
             ),
@@ -286,13 +311,13 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(BuildContext context) {
     try {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildCompareButton(),
-          _buildViewButton(),
+          _buildCompareButton(context),
+          _buildViewButton(context),
         ],
       );
     } catch (e) {
@@ -301,8 +326,11 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildCompareButton() {
+  Widget _buildCompareButton(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final screenWidth = MediaQuery.of(context).size.width;
+      
       return OutlinedButton(
         onPressed: onCompare,
         style: OutlinedButton.styleFrom(
@@ -311,13 +339,16 @@ class InsuranceCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          minimumSize: const Size(100, 40),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.06,
+            vertical: screenHeight * 0.015,
+          ),
+          minimumSize: Size(screenWidth * 0.25, screenHeight * 0.05),
         ),
         child: Text(
           'Compare',
           style: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: screenHeight * 0.017,
             fontWeight: FontWeight.w600,
             color: AppColors.compareButton,
           ),
@@ -329,8 +360,11 @@ class InsuranceCard extends StatelessWidget {
     }
   }
 
-  Widget _buildViewButton() {
+  Widget _buildViewButton(BuildContext context) {
     try {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final screenWidth = MediaQuery.of(context).size.width;
+      
       return ElevatedButton(
         onPressed: onView,
         style: ElevatedButton.styleFrom(
@@ -338,14 +372,17 @@ class InsuranceCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          minimumSize: const Size(100, 40),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.06,
+            vertical: screenHeight * 0.015,
+          ),
+          minimumSize: Size(screenWidth * 0.25, screenHeight * 0.05),
           elevation: 0,
         ),
         child: Text(
           'View',
           style: GoogleFonts.inter(
-            fontSize: 14,
+            fontSize: screenHeight * 0.017,
             fontWeight: FontWeight.w600,
             color: AppColors.white,
           ),
