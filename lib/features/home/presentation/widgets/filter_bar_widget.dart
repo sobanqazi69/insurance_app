@@ -116,6 +116,9 @@ class FilterBarWidget extends StatelessWidget {
   }
 
   void _showFilterBottomSheet(BuildContext context) {
+    // Unfocus any TextField before showing bottom sheet
+    FocusScope.of(context).unfocus();
+    
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

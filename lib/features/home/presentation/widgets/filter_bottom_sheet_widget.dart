@@ -74,7 +74,11 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      // Unfocus any TextField before closing
+                      FocusScope.of(context).unfocus();
+                      Navigator.pop(context);
+                    },
                     child: Container(
                       width: 32,
                       height: 32,
@@ -593,6 +597,8 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
+              // Unfocus any TextField before closing
+              FocusScope.of(context).unfocus();
               Navigator.pop(context);
             },
             child: Center(
