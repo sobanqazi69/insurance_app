@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/custom_bottom_nav_bar.dart';
@@ -90,36 +89,39 @@ class HomeContent extends StatelessWidget {
     try {
       return Container(
         color: Colors.white,
-        
-        child: Column(
-          children: [
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CustomSearchBar(
-                onSearchTap: () {
-                  // Handle search icon tap
-                  debugPrint('Search icon tapped');
-                },
-                onFilterTap: () {
-                  // Handle filter icon tap
-                  debugPrint('Filter icon tapped');
-                },
-                onTap: () {
-                  // Handle search bar tap
-                  debugPrint('Search bar tapped');
-                },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Search Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: CustomSearchBar(
+                  onSearchTap: () {
+                    // Handle search icon tap
+                    debugPrint('Search icon tapped');
+                  },
+                  onFilterTap: () {
+                    // Handle filter icon tap
+                    debugPrint('Filter icon tapped');
+                  },
+                  onTap: () {
+                    // Handle search bar tap
+                    debugPrint('Search bar tapped');
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            // Insurance Cards Section
-            _buildInsuranceSection(),
-            const SizedBox(height: 20),
-            // Support Section
-            _buildSupportSection(),
-            // Content
-            
-          ],
+              const SizedBox(height: 20),
+              // Insurance Cards Section
+              _buildInsuranceSection(),
+              const SizedBox(height: 20),
+              // Support Section
+              _buildSupportSection(),
+              const SizedBox(height: 20),
+              // My Claims and My Policies Section
+              _buildClaimsAndPoliciesSection(),
+              const SizedBox(height: 20), // Add bottom padding for better scrolling
+            ],
+          ),
         ),
       );
     } catch (e) {
@@ -286,6 +288,127 @@ class HomeContent extends StatelessWidget {
       );
     } catch (e) {
       debugPrint('Error building support section: $e');
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildClaimsAndPoliciesSection() {
+    try {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            // My Claims Container
+            _buildInfoContainer(
+              title: 'My Claims',
+              activeCount: '03',
+              backgroundColor: AppColors.cyan,
+              buttonColor: AppColors.viewButton,
+              onTap: () {
+                debugPrint('My Claims View All tapped');
+                // Handle claims navigation
+              },
+            ),
+            const SizedBox(height: 16),
+            // My Policies Container
+            _buildInfoContainer(
+              title: 'My Policies',
+              activeCount: '03',
+              backgroundColor: const Color(0xFFF5F5DC), // Light beige/cream color
+              buttonColor: const Color(0xFFD2691E), // Golden orange/brown color
+              onTap: () {
+                debugPrint('My Policies View All tapped');
+                // Handle policies navigation
+              },
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      debugPrint('Error building claims and policies section: $e');
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildInfoContainer({
+    required String title,
+    required String activeCount,
+    required Color backgroundColor,
+    required Color buttonColor,
+    required VoidCallback onTap,
+  }) {
+    try {
+      return Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.black,
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Left side - Text content
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Active $activeCount',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+            // Right side - View All button
+            ElevatedButton(
+              onPressed: onTap,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: buttonColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                elevation: 0,
+              ),
+              child: Text(
+                'View All',
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      debugPrint('Error building info container: $e');
       return const SizedBox.shrink();
     }
   }
