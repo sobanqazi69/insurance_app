@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/colors.dart';
 
@@ -7,12 +8,18 @@ class CustomSearchBar extends StatelessWidget {
   final VoidCallback? onSearchTap;
   final VoidCallback? onFilterTap;
   final VoidCallback? onTap;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final bool isFilterActive;
 
   const CustomSearchBar({
     super.key,
     this.onSearchTap,
     this.onFilterTap,
     this.onTap,
+    this.controller,
+    this.onChanged,
+    this.isFilterActive = false,
   });
 
   @override
@@ -27,10 +34,7 @@ class CustomSearchBar extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(
-            color: AppColors.primary,
-            width: 1,
-          ),
+          border: Border.all(color: AppColors.primary, width: 1),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -59,28 +63,29 @@ class CustomSearchBar extends StatelessWidget {
               const SizedBox(width: 12),
               // Text Input Area
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Search in',
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xFF9E9E9E),
-                      ),
+                child: TextField(
+                  controller: controller,
+                  onChanged: onChanged,
+                  decoration: InputDecoration(
+                    filled: false,
+                    hintText: 'Search Insurance...',
+                    hintStyle: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF9E9E9E),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Insurance Name',
-                      style: GoogleFonts.inter(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ],
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -91,16 +96,19 @@ class CustomSearchBar extends StatelessWidget {
                   onFilterTap?.call();
                 },
                 child: Container(
-                  width: 32,
-                  height: 32,
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF5F5F5),
-                    borderRadius: BorderRadius.circular(16),
+                    color: isFilterActive ? AppColors.cyan : const Color(0xFFF5F5F5),
+                    shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.tune,
-                    size: 18,
-                    color: AppColors.primary,
+                  child: SvgPicture.asset(
+                    'assets/icons/sort_icon.svg',
+                    width: 10,
+                    height: 10,
+                    colorFilter: ColorFilter.mode(
+                      isFilterActive ? Colors.white : AppColors.primary,
+                      BlendMode.srcIn,
+                    ),
                   ),
                 ),
               ),
