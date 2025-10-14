@@ -38,4 +38,13 @@ class AppColors {
   static const Color error = Color(0xFFEF4444);
   static const Color info = Color(0xFF3B82F6);
   static const Color warning = Color(0xFFF59E0B);
+  
+  // Insurance Card Colors
+  static const Color cardBackground = Color(0xFFF7FAFC);
+  static const Color cardInfoBackground = Color(0xFFEDF2F7);
+  static const Color premiumTag = Color(0xFF1A365D);
+  static const Color compareButton = Color(0xFFF6AD55);
+  static const Color viewButton = Color(0xFF2C7A7B);
+  static const Color iconDark = Color(0xFF2D3748);
+  static const Color iconGreen = Color(0xFF38A169);
 }
