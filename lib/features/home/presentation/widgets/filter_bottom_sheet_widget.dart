@@ -45,7 +45,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
   @override
   Widget build(BuildContext context) {
     try {
-      final screenHeight = MediaQuery.of(context).size.height;
+      final screenHeight = MediaQuery.of(context).size.height * 0.9;
       final screenWidth = MediaQuery.of(context).size.width;
       
       return Container(
@@ -289,6 +289,10 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                         decoration: const InputDecoration(
                           filled: false,
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 8),
                         ),
                         style: GoogleFonts.inter(
@@ -345,6 +349,10 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                         decoration: const InputDecoration(
                           filled: false,
                           border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.symmetric(horizontal: 8),
                         ),
                         style: GoogleFonts.inter(
