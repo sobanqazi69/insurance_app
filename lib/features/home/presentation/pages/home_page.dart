@@ -11,57 +11,158 @@ import '../widgets/sort_popup_widget.dart';
 import '../../../list/presentation/pages/list_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 
+/// Main home page widget that manages the bottom navigation and displays content.
+/// 
+/// This widget provides:
+/// - Bottom navigation between List, Home, and Profile pages
+/// - Custom app bar for the home page
+/// - Proper state management for navigation
+/// - Error handling and fallback UI
+/// 
+/// Features:
+/// - Responsive design for all screen sizes
+/// - Clean separation of concerns
+/// - Proper widget lifecycle management
+/// 
+/// Usage:
+/// ```dart
+/// Navigator.push(
+///   context,
+///   MaterialPageRoute(builder: (context) => const HomePage()),
+/// );
+/// ```
 class HomePage extends StatefulWidget {
+  /// Creates a home page widget
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
+/// State class for the HomePage widget
+/// 
+/// Manages the bottom navigation state and handles page switching
+/// with proper error handling and performance optimizations.
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 1; // Start with Home selected
+  /// Current selected tab index (0: List, 1: Home, 2: Profile)
+  int _currentIndex = _HomePageConstants.defaultTabIndex;
 
-  final List<Widget> _pages = [
-    const ListPage(),
-    const HomeContent(),
-    const ProfilePage(),
+  /// List of pages corresponding to bottom navigation tabs
+  static const List<Widget> _pages = [
+    ListPage(),
+    HomeContent(),
+    ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    try {
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
+      );
+    } catch (e) {
+      debugPrint('Error building HomePage: $e');
+      return _buildErrorWidget();
+    }
+  }
+
+  /// Builds the app bar for the home page
+  PreferredSizeWidget? _buildAppBar() {
+    if (_currentIndex != _HomePageConstants.homeTabIndex) return null;
+    
+    return CustomAppBar(
+      userName: _HomePageConstants.defaultUserName,
+      onDrawerTap: _handleDrawerTap,
+    );
+  }
+
+  /// Handles drawer tap with error handling
+  void _handleDrawerTap() {
+    try {
+      Scaffold.of(context).openDrawer();
+    } catch (e) {
+      debugPrint('Error opening drawer: $e');
+    }
+  }
+
+  /// Builds the main body content
+  Widget _buildBody() {
+    return Container(
+      color: Colors.white,
+      child: _pages[_currentIndex],
+    );
+  }
+
+  /// Builds the bottom navigation bar
+  Widget _buildBottomNavigationBar() {
+    return CustomBottomNavBar(
+      currentIndex: _currentIndex,
+      onTap: _handleTabChange,
+    );
+  }
+
+  /// Handles tab change with error handling
+  void _handleTabChange(int index) {
+    try {
+      if (index >= 0 && index < _pages.length) {
+        setState(() {
+          _currentIndex = index;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error changing tab: $e');
+    }
+  }
+
+  /// Builds error widget as fallback
+  Widget _buildErrorWidget() {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: _currentIndex == 1 ? CustomAppBar(
-        userName: 'Pavan',
-        onDrawerTap: () {
-          // Handle drawer tap
-          Scaffold.of(context).openDrawer();
-        },
-      ) : null,
-      body: _pages[_currentIndex],
-      bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      body: const Center(
+        child: Text('Error loading page'),
       ),
     );
   }
 }
 
+/// Home content widget that manages search functionality and displays content.
+/// 
+/// This widget provides:
+/// - Search bar with filter functionality
+/// - Conditional content display based on search state
+/// - Sort popup management
+/// - Proper focus management and keyboard handling
+/// 
+/// Features:
+/// - Responsive design for all screen sizes
+/// - Clean state management
+/// - Error handling with fallback UI
+/// - Performance optimizations
+/// 
+/// Usage:
+/// ```dart
+/// const HomeContent()
+/// ```
 class HomeContent extends StatefulWidget {
+  /// Creates a home content widget
   const HomeContent({super.key});
 
   @override
   State<HomeContent> createState() => _HomeContentState();
 }
 
+/// State class for the HomeContent widget
+/// 
+/// Manages search state, sort popup visibility, and user interactions
+/// with proper error handling and performance optimizations.
 class _HomeContentState extends State<HomeContent> {
+  // Search state management
   bool _isSearching = false;
   bool _showSortPopup = false;
-  String _selectedSort = 'newest';
+  String _selectedSort = _HomeContentConstants.defaultSortOption;
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -70,22 +171,37 @@ class _HomeContentState extends State<HomeContent> {
     super.dispose();
   }
 
+  /// Handles search text changes with error handling
   void _onSearchChanged(String value) {
-    setState(() {
-      _isSearching = value.isNotEmpty;
-    });
+    try {
+      setState(() {
+        _isSearching = value.isNotEmpty;
+      });
+    } catch (e) {
+      debugPrint('Error handling search change: $e');
+    }
   }
 
+  /// Toggles sort popup visibility with error handling
   void _toggleSortPopup() {
-    setState(() {
-      _showSortPopup = !_showSortPopup;
-    });
+    try {
+      setState(() {
+        _showSortPopup = !_showSortPopup;
+      });
+    } catch (e) {
+      debugPrint('Error toggling sort popup: $e');
+    }
   }
 
+  /// Handles sort option selection with error handling
   void _onSortSelected(String sortType) {
-    setState(() {
-      _selectedSort = sortType;
-    });
+    try {
+      setState(() {
+        _selectedSort = sortType;
+      });
+    } catch (e) {
+      debugPrint('Error selecting sort option: $e');
+    }
   }
 
   @override
@@ -199,4 +315,35 @@ class _HomeContentState extends State<HomeContent> {
       ],
     );
   }
+}
+
+/// Constants for the HomePage widget
+/// 
+/// This class contains all the configuration constants used in the HomePage
+/// to ensure consistency and maintainability.
+class _HomePageConstants {
+  // Tab indices
+  static const int listTabIndex = 0;
+  static const int homeTabIndex = 1;
+  static const int profileTabIndex = 2;
+  static const int defaultTabIndex = homeTabIndex;
+  
+  // User information
+  static const String defaultUserName = 'Pavan';
+}
+
+/// Constants for the HomeContent widget
+/// 
+/// This class contains all the configuration constants used in the HomeContent
+/// to ensure consistency and maintainability.
+class _HomeContentConstants {
+  // Search and sort options
+  static const String defaultSortOption = 'newest';
+  
+  // UI Constants
+  static const double searchBarPadding = 0.025; // 2.5% of screen height
+  static const double sectionSpacing = 0.02; // 2% of screen height
+  static const double contentSpacing = 0.025; // 2.5% of screen height
+  static const double popupTopOffset = 0.1; // 10% of screen height
+  static const double popupRightOffset = 0.025; // 2.5% of screen height
 }

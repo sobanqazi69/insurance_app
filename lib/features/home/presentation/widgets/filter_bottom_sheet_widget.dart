@@ -1,45 +1,166 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:insurance_app/core/widgets/custom_text_field.dart';
 import '../../../../core/constants/colors.dart';
 
+/// A comprehensive filter bottom sheet widget for insurance search filtering.
+/// 
+/// This widget provides a modal bottom sheet interface with multiple filter options:
+/// - Product Type selection with pill-style buttons
+/// - Sum Insured range slider with real-time value display
+/// - Premium Range input fields with currency formatting
+/// - Tenor selection with predefined options
+/// - Insurer, Excess, and Add-ons dropdown selections
+/// 
+/// Features:
+/// - Responsive design for all screen sizes
+/// - Proper focus management and keyboard handling
+/// - Error handling with fallback UI
+/// - Clean separation of concerns with dedicated methods
+/// 
+/// Usage:
+/// ```dart
+/// showModalBottomSheet(
+///   context: context,
+///   isScrollControlled: true,
+///   backgroundColor: Colors.transparent,
+///   builder: (context) => const FilterBottomSheetWidget(),
+/// );
+/// ```
 class FilterBottomSheetWidget extends StatefulWidget {
+  /// Creates a filter bottom sheet widget
   const FilterBottomSheetWidget({super.key});
 
   @override
   State<FilterBottomSheetWidget> createState() => _FilterBottomSheetWidgetState();
 }
 
+/// State class for the FilterBottomSheetWidget
+/// 
+/// Manages the state of all filter options and handles user interactions
+/// with proper error handling and performance optimizations.
 class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
+  // Controllers for premium range input fields
   final TextEditingController _minPremiumController = TextEditingController();
   final TextEditingController _maxPremiumController = TextEditingController();
   
-  String _selectedProductType = 'Product one';
-  String _selectedTenor = '2 Year';
-  RangeValues _sumInsuredRange = const RangeValues(0, 500);
+  // Selected filter values
+  String _selectedProductType = _FilterConstants.defaultProductType;
+  String _selectedTenor = _FilterConstants.defaultTenor;
+  RangeValues _sumInsuredRange = _FilterConstants.defaultSumInsuredRange;
   
-  final List<String> _productTypes = [
-    'Product one',
-    'Product one',
-    'Product one',
-    'Product one',
-    'Product one',
-    'Product one',
-  ];
-
-  final List<String> _tenorOptions = [
-    '1 Year',
-    '2 Year',
-    '3 Year',
-    '4 Year',
-    '5 Year',
-  ];
+  // Available options for filter selections
+  static const List<String> _productTypes = _FilterConstants.productTypes;
+  static const List<String> _tenorOptions = _FilterConstants.tenorOptions;
 
   @override
   void dispose() {
     _minPremiumController.dispose();
     _maxPremiumController.dispose();
     super.dispose();
+  }
+
+  /// Builds the container decoration for the bottom sheet
+  BoxDecoration _buildContainerDecoration() {
+    return const BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(_FilterConstants.borderRadius),
+        topRight: Radius.circular(_FilterConstants.borderRadius),
+      ),
+    );
+  }
+
+  /// Builds the header section with title and close button
+  Widget _buildHeader(double screenHeight) {
+    return Padding(
+      padding: EdgeInsets.all(screenHeight * _FilterConstants.horizontalPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            _FilterConstants.titleText,
+            style: GoogleFonts.inter(
+              fontSize: screenHeight * _FilterConstants.titleFontSize,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          _buildCloseButton(screenHeight),
+        ],
+      ),
+    );
+  }
+
+  /// Builds the close button with proper focus management
+  Widget _buildCloseButton(double screenHeight) {
+    return GestureDetector(
+      onTap: _handleCloseTap,
+      child: Container(
+        width: _FilterConstants.closeButtonSize,
+        height: _FilterConstants.closeButtonSize,
+        decoration: const BoxDecoration(
+          color: _FilterConstants.closeButtonBackground,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.close,
+          size: screenHeight * _FilterConstants.closeIconSize,
+          color: AppColors.textPrimary,
+        ),
+      ),
+    );
+  }
+
+  /// Handles close button tap with proper focus management
+  void _handleCloseTap() {
+    try {
+      // Unfocus any TextField before closing
+      FocusScope.of(context).unfocus();
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('Error handling close tap: $e');
+    }
+  }
+
+  /// Builds the main content area with all filter sections
+  Widget _buildContent(double screenHeight) {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: screenHeight * _FilterConstants.horizontalPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Product Type Section
+            _buildProductTypeSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Sum Insured Section
+            _buildSumInsuredSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Premium Range Section
+            _buildPremiumRangeSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Tenor Section
+            _buildTenorSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Insurer Section
+            _buildInsurerSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Excess Section
+            _buildExcessSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.sectionSpacing),
+            
+            // Add-ons Section
+            _buildAddonsSection(context),
+            SizedBox(height: screenHeight * _FilterConstants.bottomSpacing),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -49,95 +170,18 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
       final screenWidth = MediaQuery.of(context).size.width;
       
       return Container(
-        height: screenHeight * 0.9,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
+        height: screenHeight * _FilterConstants.containerHeight,
+        decoration: _buildContainerDecoration(),
         child: Column(
           children: [
             // Header
-            Padding(
-              padding: EdgeInsets.all(screenHeight * 0.025),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Filters',
-                    style: GoogleFonts.inter(
-                      fontSize: screenHeight * 0.022,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // Unfocus any TextField before closing
-                      FocusScope.of(context).unfocus();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: AppColors.borderLight,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.close,
-                        size: screenHeight * 0.02,
-                        color: AppColors.textPrimary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildHeader(screenHeight),
             
             // Content
-            Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: screenHeight * 0.025),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Product Type Section
-                    _buildProductTypeSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Sum Insured Section
-                    _buildSumInsuredSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Premium Range Section
-                    _buildPremiumRangeSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Tenor Section
-                    _buildTenorSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Insurer Section
-                    _buildInsurerSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Excess Section
-                    _buildExcessSection(context),
-                    SizedBox(height: screenHeight * 0.03),
-                    
-                    // Add-ons Section
-                    _buildAddonsSection(context),
-                    SizedBox(height: screenHeight * 0.04),
-                  ],
-                ),
-              ),
-            ),
+            _buildContent(screenHeight),
             
             // Done Button
-            _buildDoneButton(context),
+            _buildDoneButton(screenHeight),
           ],
         ),
       );
@@ -580,32 +624,27 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
     );
   }
 
-  Widget _buildDoneButton(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    
+  /// Builds the done button with proper focus management
+  Widget _buildDoneButton(double screenHeight) {
     return Padding(
-      padding: EdgeInsets.all(screenHeight * 0.025),
+      padding: EdgeInsets.all(screenHeight * _FilterConstants.horizontalPadding),
       child: Container(
         width: double.infinity,
-        height: 48,
+        height: _FilterConstants.buttonHeight,
         decoration: BoxDecoration(
           color: AppColors.cyan,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(_FilterConstants.borderRadius * 0.6), // 12px
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () {
-              // Unfocus any TextField before closing
-              FocusScope.of(context).unfocus();
-              Navigator.pop(context);
-            },
+            borderRadius: BorderRadius.circular(_FilterConstants.borderRadius * 0.6),
+            onTap: _handleDoneTap,
             child: Center(
               child: Text(
-                'Done',
+                _FilterConstants.doneButtonText,
                 style: GoogleFonts.inter(
-                  fontSize: screenHeight * 0.018,
+                  fontSize: screenHeight * _FilterConstants.buttonFontSize,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
@@ -617,5 +656,94 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
     );
   }
 
+  /// Handles done button tap with proper focus management
+  void _handleDoneTap() {
+    try {
+      // Unfocus any TextField before closing
+      FocusScope.of(context).unfocus();
+      Navigator.pop(context);
+    } catch (e) {
+      debugPrint('Error handling done tap: $e');
+    }
+  }
+}
 
+/// Constants for the FilterBottomSheetWidget
+/// 
+/// This class contains all the design constants, default values, and
+/// configuration options used in the filter bottom sheet to ensure
+/// consistency and maintainability.
+class _FilterConstants {
+  // Default values
+  static const String defaultProductType = 'Product one';
+  static const String defaultTenor = '2 Year';
+  static const RangeValues defaultSumInsuredRange = RangeValues(0, 500);
+  
+  // Product type options
+  static const List<String> productTypes = [
+    'Product one',
+    'Product one',
+    'Product one',
+    'Product one',
+    'Product one',
+    'Product one',
+  ];
+  
+  // Tenor options
+  static const List<String> tenorOptions = [
+    '1 Year',
+    '2 Year',
+    '3 Year',
+    '4 Year',
+    '5 Year',
+  ];
+  
+  // UI Constants
+  static const double containerHeight = 0.9; // 90% of screen height
+  static const double borderRadius = 20.0;
+  static const double sectionSpacing = 0.03; // 3% of screen height
+  static const double bottomSpacing = 0.04; // 4% of screen height
+  static const double horizontalPadding = 0.025; // 2.5% of screen height
+  
+  // Text sizes
+  static const double titleFontSize = 0.022; // 2.2% of screen height
+  static const double labelFontSize = 0.018; // 1.8% of screen height
+  static const double buttonFontSize = 0.018; // 1.8% of screen height
+  static const double inputFontSize = 0.016; // 1.6% of screen height
+  static const double smallFontSize = 0.014; // 1.4% of screen height
+  
+  // Spacing
+  static const double labelSpacing = 0.015; // 1.5% of screen height
+  static const double buttonSpacing = 0.01; // 1% of screen height
+  static const double inputSpacing = 0.01; // 1% of screen height
+  
+  // Dimensions
+  static const double inputHeight = 48.0;
+  static const double buttonHeight = 48.0;
+  static const double closeButtonSize = 32.0;
+  static const double closeIconSize = 0.02; // 2% of screen height
+  
+  // Colors
+  static const Color closeButtonBackground = Color(0xFFF1F5F9);
+  
+  // Text
+  static const String titleText = 'Filters';
+  static const String doneButtonText = 'Done';
+  static const String productTypeLabel = 'Product Type';
+  static const String sumInsuredLabel = 'Sum Insured';
+  static const String premiumRangeLabel = 'Premium Range';
+  static const String tenorLabel = 'Tenor';
+  static const String insurerLabel = 'Insurer';
+  static const String excessLabel = 'Excess';
+  static const String addonsLabel = 'Add-ons';
+  
+  // Placeholders
+  static const String insurerPlaceholder = 'Name';
+  static const String excessPlaceholder = 'Excess';
+  static const String addonsPlaceholder = 'Add-Ons';
+  static const String currencySymbol = '\$';
+  static const String currencyCode = 'USD';
+  static const String rangeSeparator = '-';
+  static const String totalPrefix = 'Total: ';
+  static const String totalSuffix = ' \$';
 }
