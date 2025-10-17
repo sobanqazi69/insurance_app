@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../shared/models/insurance_model.dart';
 
-
 class ProductDetailsPage extends StatefulWidget {
   final InsuranceModel insurance;
-  const ProductDetailsPage({
-    super.key,
-    required this.insurance,
-  });
+  const ProductDetailsPage({super.key, required this.insurance});
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -20,7 +17,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   final TextEditingController _minPremiumController = TextEditingController();
   final TextEditingController _maxPremiumController = TextEditingController();
   String _selectedTenor = '2 Year';
-  
+
   static const List<String> _tenureOptions = [
     '1 Year',
     '2 Year',
@@ -113,12 +110,35 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         children: [
           _buildProductHeader(context),
           Transform.translate(
-            offset: Offset(0, -MediaQuery.of(context).size.height * 0.06),
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+              ),
               child: _buildInsuranceCalculator(context),
             ),
           ),
+           Transform.translate(
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+              ),
+               child:           _buildOverviewSection(context),
+
+             ),
+           ),
+   Transform.translate(
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
+            child: Container(
+             
+               child:                             _buildBenefitsSection(context),
+
+             ),
+           ),
+
+
+
         ],
       ),
     );
@@ -137,9 +157,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         children: [
           _buildCompanyLogo(context),
           SizedBox(width: MediaQuery.of(context).size.width * 0.04),
-          Expanded(
-            child: _buildCompanyName(context),
-          ),
+          Expanded(child: _buildCompanyName(context)),
         ],
       ),
     );
@@ -148,7 +166,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Widget _buildCompanyLogo(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final logoSize = screenHeight * 0.08;
-    
+
     return Container(
       width: logoSize,
       height: logoSize,
@@ -246,6 +264,157 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
+  Widget _buildOverviewSection(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+      ),
+     
+     
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Overview',
+            style: GoogleFonts.poppins(
+              fontSize: MediaQuery.of(context).size.height * 0.02,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          _buildOverviewRow(context, 'Room & Board Limit', 'General Ward'),
+          _buildDivider(context),
+          _buildOverviewRow(context, 'Cashless Treatment at', '431 Hospitals'),
+          _buildDivider(context),
+          _buildOverviewRow(context, 'Discount Available at', '181 Labs'),
+          _buildDivider(context),
+          _buildOverviewRow(context, 'Room & Board Limit', 'General Ward'),
+          _buildDivider(context),
+          _buildOverviewRow(context, 'Cashless Treatment at', '431 Hospitals'),
+          _buildDivider(context),
+          _buildOverviewRow(context, 'Discount Available at', '181 Labs'),
+                    _buildDivider(context),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOverviewRow(BuildContext context, String label, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.height * 0.005,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: GoogleFonts.poppins(
+                fontSize: MediaQuery.of(context).size.height * 0.014,
+                fontWeight: FontWeight.w400,
+                // fontStyle: FontStyle.italic,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: GoogleFonts.poppins(
+                fontSize: MediaQuery.of(context).size.height * 0.016,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.end,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDivider(BuildContext context) {
+    return Container(
+      height: 1,
+      color: Colors.black,
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.height * 0.005,
+      ),
+    );
+  }
+
+  Widget _buildBenefitsSection(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+      ),
+      padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+     
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Benefits',
+            style: GoogleFonts.poppins(
+              fontSize: MediaQuery.of(context).size.height * 0.02,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+          _buildBenefitItem(
+            context,
+            'Credit Facility in 200+ Hospitals all across Pakistan',
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          _buildBenefitItem(
+            context,
+            'No Medical Test Required',
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          _buildBenefitItem(
+            context,
+            '14 days free look up period - option of cancelling if not satisfied',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBenefitItem(BuildContext context, String text) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.height * 0.025,
+          height: MediaQuery.of(context).size.height * 0.025,
+         
+          child: Center(
+            child: SvgPicture.asset(
+              'assets/icons/check_tick.svg',
+            
+            ),
+          ),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+        Expanded(
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              fontSize: MediaQuery.of(context).size.height * 0.016,
+              fontWeight: FontWeight.w400,
+              color: AppColors.primary,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildCalculatorTitle(BuildContext context) {
     return Text(
       'Insurance Calculator',
@@ -273,27 +442,27 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 fontStyle: FontStyle.italic,
               ),
             ),
-           Row(
-            children: [
-              Text(
-                'Total: ',
-                style: GoogleFonts.poppins(
-                  fontSize: MediaQuery.of(context).size.height * 0.018,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.primary,
-                  fontStyle: FontStyle.italic,
+            Row(
+              children: [
+                Text(
+                  'Total: ',
+                  style: GoogleFonts.poppins(
+                    fontSize: MediaQuery.of(context).size.height * 0.018,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.primary,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
-              ),
-              Text(
-                'PKR ${_sumInsuredRange.end.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-                style: GoogleFonts.poppins(
-                  fontSize: MediaQuery.of(context).size.height * 0.018,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
+                Text(
+                  'PKR ${_sumInsuredRange.end.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                  style: GoogleFonts.poppins(
+                    fontSize: MediaQuery.of(context).size.height * 0.018,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
                 ),
-              ),
-            ],
-           ),
+              ],
+            ),
           ],
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.015),
@@ -305,9 +474,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             overlayColor: Color(0x1A083146),
             thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
             trackHeight: 3,
-            rangeThumbShape: const RoundRangeSliderThumbShape(enabledThumbRadius: 6),
+            rangeThumbShape: const RoundRangeSliderThumbShape(
+              enabledThumbRadius: 6,
+            ),
             rangeTrackShape: const RectangularRangeSliderTrackShape(),
-            rangeValueIndicatorShape: const PaddleRangeSliderValueIndicatorShape(),
+            rangeValueIndicatorShape:
+                const PaddleRangeSliderValueIndicatorShape(),
           ),
           child: RangeSlider(
             values: _sumInsuredRange,
@@ -342,10 +514,16 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         Row(
           children: [
             Expanded(
-              child: _buildPremiumInputField(context, _minPremiumController, true),
+              child: _buildPremiumInputField(
+                context,
+                _minPremiumController,
+                true,
+              ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.02),
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.02,
+              ),
               child: Text(
                 '-',
                 style: GoogleFonts.poppins(
@@ -356,7 +534,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               ),
             ),
             Expanded(
-              child: _buildPremiumInputField(context, _maxPremiumController, false),
+              child: _buildPremiumInputField(
+                context,
+                _maxPremiumController,
+                false,
+              ),
             ),
           ],
         ),
@@ -364,7 +546,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     );
   }
 
-  Widget _buildPremiumInputField(BuildContext context, TextEditingController controller, bool isFirst) {
+  Widget _buildPremiumInputField(
+    BuildContext context,
+    TextEditingController controller,
+    bool isFirst,
+  ) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.055,
       decoration: BoxDecoration(
@@ -399,7 +585,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.03),
+            padding: EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.03,
+            ),
             child: Text(
               'PKR',
               style: GoogleFonts.poppins(
@@ -430,7 +618,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         SizedBox(height: MediaQuery.of(context).size.height * 0.015),
         Wrap(
           spacing: MediaQuery.of(context).size.width * 0.02,
-          children: _tenureOptions.map((tenure) => _buildTenorButton(context, tenure)).toList(),
+          children: _tenureOptions
+              .map((tenure) => _buildTenorButton(context, tenure))
+              .toList(),
         ),
       ],
     );
@@ -438,7 +628,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   Widget _buildTenorButton(BuildContext context, String tenor) {
     final isSelected = _selectedTenor == tenor;
-    
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -450,16 +640,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           horizontal: MediaQuery.of(context).size.width * 0.035,
           vertical: MediaQuery.of(context).size.height * 0.008,
         ),
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.01),
+        margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.01,
+        ),
         decoration: BoxDecoration(
-          color: isSelected 
-              ? AppColors.gradientStart
-              : AppColors.white,
+          color: isSelected ? AppColors.gradientStart : AppColors.white,
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(
-            color: isSelected 
-                ? AppColors.primary
-                : AppColors.border,
+            color: isSelected ? AppColors.primary : AppColors.border,
             width: 1.0,
           ),
         ),
@@ -486,7 +674,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             fontStyle: FontStyle.italic,
             color: AppColors.primary,
           ),
-        ), 
+        ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.02),
         Text(
           'PKR ${_calculateMonthlyPremium().toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
@@ -536,10 +724,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         elevation: 0,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: AppColors.white,
-          ),
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
         ),
         title: Text(
           'Product Details',
