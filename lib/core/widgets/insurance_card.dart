@@ -1,21 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/colors.dart';
+import '../../shared/models/insurance_model.dart';
+import '../../features/home/presentation/pages/product_details_page.dart';
 
+/// A reusable insurance card widget that displays insurance product information.
+/// 
+/// This widget provides:
+/// - Company logo and name display
+/// - Premium and payment information
+/// - Interactive action buttons (Compare and View)
+/// - Navigation to product details page
+/// - Responsive design for all screen sizes
+/// 
+/// Features:
+/// - Clean, professional design
+/// - Proper error handling with fallback UI
+/// - Smooth navigation integration
+/// - Data model integration
+/// 
+/// Usage:
+/// ```dart
+/// InsuranceCard(
+///   insurance: insuranceModel,
+///   onCompare: () => handleCompare(),
+/// )
+/// ```
 class InsuranceCard extends StatelessWidget {
-  final String companyName;
-  final String premiumAmount;
-  final String monthlyAmount;
-  final String workshopCount;
+  /// The insurance model containing all product details
+  final InsuranceModel insurance;
+  
+  /// Callback triggered when compare button is tapped
   final VoidCallback? onCompare;
+  
+  /// Callback triggered when view button is tapped (optional, defaults to navigation)
   final VoidCallback? onView;
 
+  /// Creates an insurance card widget
   const InsuranceCard({
     super.key,
-    required this.companyName,
-    required this.premiumAmount,
-    required this.monthlyAmount,
-    required this.workshopCount,
+    required this.insurance,
     this.onCompare,
     this.onView,
   });
@@ -102,16 +126,16 @@ class InsuranceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  companyName.split(' ').take(2).join(' '),
+                  insurance.companyName.split(' ').take(2).join(' '),
                   style: GoogleFonts.inter(
                     fontSize: screenHeight * 0.02,
                     fontWeight: FontWeight.w600,
                     color: AppColors.iconDark,
                   ),
                 ),
-                if (companyName.split(' ').length > 2)
+                if (insurance.companyName.split(' ').length > 2)
                   Text(
-                    companyName.split(' ').skip(2).join(' '),
+                    insurance.companyName.split(' ').skip(2).join(' '),
                     style: GoogleFonts.inter(
                       fontSize: screenHeight * 0.02,
                       fontWeight: FontWeight.w600,
@@ -224,7 +248,7 @@ class InsuranceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              premiumAmount,
+              insurance.premiumAmount,
               style: GoogleFonts.poppins(
                 fontSize: screenHeight * 0.018,
                 fontWeight: FontWeight.w700,
@@ -262,13 +286,13 @@ class InsuranceCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: _buildInfoItem(context, monthlyAmount, 'Monthly'),
+              child: _buildInfoItem(context, insurance.monthlyAmount, 'Monthly'),
             ),
             Expanded(
-              child: _buildInfoItem(context, workshopCount, 'Workshop'),
+              child: _buildInfoItem(context, insurance.workshopCount, 'Workshop'),
             ),
             Expanded(
-              child: _buildInfoItem(context, workshopCount, 'Workshop'),
+              child: _buildInfoItem(context, insurance.workshopCount, 'Workshop'),
             ),
           ],
         ),
@@ -366,7 +390,7 @@ class InsuranceCard extends StatelessWidget {
       final screenWidth = MediaQuery.of(context).size.width;
       
       return ElevatedButton(
-        onPressed: onView,
+        onPressed: () => _handleViewTap(context),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.cyan,
           shape: RoundedRectangleBorder(
@@ -391,6 +415,26 @@ class InsuranceCard extends StatelessWidget {
     } catch (e) {
       debugPrint('Error building view button: $e');
       return const SizedBox.shrink();
+    }
+  }
+
+  /// Handles view button tap with navigation to product details page
+  void _handleViewTap(BuildContext context) {
+    try {
+      if (onView != null) {
+        // Use custom callback if provided
+        onView!();
+      } else {
+        // Default navigation to product details page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(insurance: insurance),
+          ),
+        );
+      }
+    } catch (e) {
+      debugPrint('Error handling view tap: $e');
     }
   }
 }

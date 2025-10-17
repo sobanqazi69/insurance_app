@@ -76,17 +76,10 @@ class InsuranceSectionWidget extends StatelessWidget {
                 try {
                   final insurance = _sampleInsuranceData[index];
                   return InsuranceCard(
-                    companyName: insurance.companyName,
-                    premiumAmount: insurance.premiumAmount,
-                    monthlyAmount: insurance.monthlyAmount,
-                    workshopCount: insurance.workshopCount,
+                    insurance: insurance,
                     onCompare: () {
                       debugPrint('Compare tapped for ${insurance.companyName}');
                       // Handle compare action
-                    },
-                    onView: () {
-                      debugPrint('View tapped for ${insurance.companyName}');
-                      // Handle view action
                     },
                   );
                 } catch (e) {

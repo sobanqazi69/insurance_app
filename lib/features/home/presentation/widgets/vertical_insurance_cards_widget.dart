@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
+import '../../../../core/widgets/insurance_card.dart';
 import '../../../../shared/models/insurance_model.dart';
 
 class VerticalInsuranceCardsWidget extends StatelessWidget {
@@ -82,14 +83,18 @@ class VerticalInsuranceCardsWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 try {
                   final insurance = _sampleInsuranceData[index];
-                  return Container(
-                    margin: EdgeInsets.only(bottom: screenHeight * 0.02),
-                    child: _buildVerticalInsuranceCard(
-                      context: context,
-                      companyName: insurance.companyName,
-                      premiumAmount: insurance.premiumAmount,
-                      monthlyAmount: insurance.monthlyAmount,
-                      workshopCount: insurance.workshopCount,
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.05,
+                      right: MediaQuery.of(context).size.width * 0.05,
+                      bottom: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    child: InsuranceCard(
+                      insurance: insurance,
+                      onCompare: () {
+                        debugPrint('Compare tapped for ${insurance.companyName}');
+                        // Handle compare action
+                      },
                     ),
                   );
                 } catch (e) {
@@ -107,63 +112,6 @@ class VerticalInsuranceCardsWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildVerticalInsuranceCard({
-    required BuildContext context,
-    required String companyName,
-    required String premiumAmount,
-    required String monthlyAmount,
-    required String workshopCount,
-  }) {
-    try {
-      final screenWidth = MediaQuery.of(context).size.width;
-      final screenHeight = MediaQuery.of(context).size.height;
-      final cardWidth = screenWidth * 0.9; // Use 90% width for vertical cards
-      final cardHeight = screenHeight * 0.25; // Smaller height for vertical layout
-      final padding = screenHeight * 0.02;
-      
-      return Container(
-        width: cardWidth,
-        height: cardHeight,
-        // No margin for vertical cards - padding is handled by ListView
-        decoration: BoxDecoration(
-          color: AppColors.cardBackground,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: Colors.black,
-            width: 1.5,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadow,
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: padding,
-            left: padding,
-            right: padding,
-            bottom: padding * 0.25,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context, companyName, premiumAmount),
-              SizedBox(height: padding),
-              _buildInfoSection(context, monthlyAmount, workshopCount),
-              SizedBox(height: padding),
-              _buildActionButtons(context),
-            ],
-          ),
-        ),
-      );
-    } catch (e) {
-      debugPrint('Error building vertical insurance card: $e');
-      return const SizedBox.shrink();
-    }
-  }
 
   Widget _buildHeader(BuildContext context, String companyName, String premiumAmount) {
     try {
