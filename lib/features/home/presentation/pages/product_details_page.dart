@@ -106,23 +106,39 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              _buildProductHeader(context),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-              _buildOverviewSection(context),
-              _buildBenefitsSection(context),
-              _buildActionButtonsSection(context),
-            ],
+          _buildProductHeader(context),
+          Transform.translate(
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+              ),
+              child: _buildInsuranceCalculator(context),
+            ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.12,
-            left: MediaQuery.of(context).size.width * 0.05,
-            right: MediaQuery.of(context).size.width * 0.05,
-            child: _buildInsuranceCalculator(context),
-          ),
+           Transform.translate(
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+              ),
+               child:           _buildOverviewSection(context),
+
+             ),
+           ),
+   Transform.translate(
+            offset: Offset(0, -MediaQuery.of(context).size.height * 0.04),
+            child: Container(
+             
+               child:                             _buildBenefitsSection(context),
+
+             ),
+           ),
+
+
+
         ],
       ),
     );
@@ -226,6 +242,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12.0),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.08),
+        //     blurRadius: 8,
+        //     offset: const Offset(0, 2),
+        //   ),
+        // ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,6 +269,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       margin: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.05,
       ),
+     
+     
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -269,7 +294,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           _buildOverviewRow(context, 'Cashless Treatment at', '431 Hospitals'),
           _buildDivider(context),
           _buildOverviewRow(context, 'Discount Available at', '181 Labs'),
-          _buildDivider(context),
+                    _buildDivider(context),
+
         ],
       ),
     );
@@ -289,6 +315,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               style: GoogleFonts.poppins(
                 fontSize: MediaQuery.of(context).size.height * 0.014,
                 fontWeight: FontWeight.w400,
+                // fontStyle: FontStyle.italic,
                 color: AppColors.primary,
               ),
             ),
@@ -325,6 +352,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         horizontal: MediaQuery.of(context).size.width * 0.05,
       ),
       padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+     
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -363,8 +391,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         Container(
           width: MediaQuery.of(context).size.height * 0.025,
           height: MediaQuery.of(context).size.height * 0.025,
+         
           child: Center(
-            child: SvgPicture.asset('assets/icons/check_tick.svg'),
+            child: SvgPicture.asset(
+              'assets/icons/check_tick.svg',
+            
+            ),
           ),
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.01),
@@ -380,199 +412,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildActionButtonsSection(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.05,
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: _buildActionButton(
-                  context,
-                  'Docs Required',
-                  AppColors.compareButton,
-                  Colors.white,
-                  true,
-                ),
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.03),
-              Expanded(
-                child: _buildActionButton(
-                  context,
-                  'Reviews',
-                  Colors.white,
-                  AppColors.compareButton,
-                  false,
-                  icon: Icons.star,
-                ),
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.03),
-              _buildAgentSection(context),
-            ],
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-          Row(
-            children: [
-              Expanded(
-                child: _buildActionButton(
-                  context,
-                  'Compare',
-                  Colors.white,
-                  AppColors.compareButton,
-                  false,
-                ),
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.03),
-              Expanded(
-                flex: 2,
-                child: _buildActionButton(
-                  context,
-                  'Apply Now',
-                  AppColors.cyan,
-                  Colors.white,
-                  true,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionButton(
-    BuildContext context,
-    String text,
-    Color backgroundColor,
-    Color textColor,
-    bool isFilled, {
-    IconData? icon,
-  }) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.06,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8.0),
-        border: isFilled
-            ? null
-            : Border.all(color: AppColors.compareButton, width: 1.0),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(8.0),
-          onTap: () => _handleButtonTap(context, text),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (icon != null) ...[
-                  Icon(
-                    icon,
-                    color: textColor,
-                    size: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                ],
-                Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    fontSize: MediaQuery.of(context).size.height * 0.016,
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAgentSection(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          Icons.headset_mic,
-          color: AppColors.primary,
-          size: MediaQuery.of(context).size.height * 0.025,
-        ),
-        SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-        Text(
-          'Agent',
-          style: GoogleFonts.poppins(
-            fontSize: MediaQuery.of(context).size.height * 0.016,
-            fontWeight: FontWeight.w600,
-            color: AppColors.primary,
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _handleButtonTap(BuildContext context, String buttonText) {
-    try {
-      switch (buttonText) {
-        case 'Docs Required':
-          _showDocsRequired(context);
-          break;
-        case 'Reviews':
-          _showReviews(context);
-          break;
-        case 'Compare':
-          _showCompare(context);
-          break;
-        case 'Apply Now':
-          _showApplyNow(context);
-          break;
-        default:
-          debugPrint('Button tapped: $buttonText');
-      }
-    } catch (e) {
-      debugPrint('Error handling button tap: $e');
-    }
-  }
-
-  void _showDocsRequired(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Docs Required feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _showReviews(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Reviews feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _showCompare(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Compare feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _showApplyNow(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Apply Now feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
     );
   }
 
