@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
+import '../../../../shared/services/navigation_service.dart';
+import '../pages/insurance_compare_page.dart';
 
 class InsuranceCompareBottomSheet extends StatefulWidget {
   const InsuranceCompareBottomSheet({super.key});
@@ -252,7 +254,8 @@ class _InsuranceCompareBottomSheetState extends State<InsuranceCompareBottomShee
   void _handleDone(BuildContext context) {
     try {
       debugPrint('Done button tapped');
-      Navigator.pop(context);
+      Navigator.pop(context); // Close bottom sheet
+      NavigationService.pushTo(context, const InsuranceComparePage());
     } catch (e) {
       debugPrint('Error handling done: $e');
     }
