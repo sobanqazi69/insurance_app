@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../shared/models/insurance_model.dart';
+import '../../../../shared/services/navigation_service.dart';
+import '../../../getInsurance/presentation/pages/getInsurance_1_page.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final InsuranceModel insurance;
@@ -86,7 +88,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   void _handleBackNavigation(BuildContext context) {
     try {
-      Navigator.pop(context);
+      NavigationService.pop(context);
     } catch (e) {
       debugPrint('Error handling back navigation: $e');
     }
@@ -313,39 +315,38 @@ Widget _buildActionButton(
   }
 
   void _showDocsRequired(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Docs Required feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
+    try {
+      debugPrint('Docs Required feature coming soon');
+      // TODO: Navigate to docs required page
+    } catch (e) {
+      debugPrint('Error handling docs required: $e');
+    }
   }
 
   void _showReviews(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Reviews feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
+    try {
+      debugPrint('Reviews feature coming soon');
+      // TODO: Navigate to reviews page
+    } catch (e) {
+      debugPrint('Error handling reviews: $e');
+    }
   }
 
   void _showCompare(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Compare feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
+    try {
+      debugPrint('Compare feature coming soon');
+      // TODO: Navigate to compare page
+    } catch (e) {
+      debugPrint('Error handling compare: $e');
+    }
   }
 
   void _showApplyNow(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Apply Now feature coming soon'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
+    try {
+      NavigationService.pushTo(context, const GetInsurance1Page());
+    } catch (e) {
+      debugPrint('Error navigating to GetInsurance1Page: $e');
+    }
   }
 
 
@@ -930,7 +931,7 @@ Widget _buildActionButton(
         backgroundColor: AppColors.primary,
         elevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => NavigationService.pop(context),
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.white),
         ),
         title: Text(
