@@ -7,7 +7,7 @@ import '../../../getInsurance/presentation/widgets/insurance_next_button.dart';
 import '../widgets/claim_header.dart';
 import '../widgets/claim_dropdown_field.dart';
 import '../widgets/claim_text_field.dart';
-import '../../../policies/presentation/pages/policy_detail_page.dart';
+import 'claim_tracking_page.dart';
 
 class Claim5Page extends StatefulWidget {
   const Claim5Page({super.key});
@@ -130,8 +130,8 @@ class _Claim5PageState extends State<Claim5Page> {
         return;
       }
       debugPrint('Claim submitted successfully');
-      // Navigate back to policy detail page
-      NavigationService.pushTo(context, const PolicyDetailPage());
+      // Navigate to claim tracking page
+      NavigationService.pushTo(context, const ClaimTrackingPage());
     } catch (e) {
       debugPrint('Error handling submit button: $e');
     }
