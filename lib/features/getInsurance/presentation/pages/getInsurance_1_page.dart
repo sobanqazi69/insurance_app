@@ -408,10 +408,14 @@ class _GetInsurance1PageState extends State<GetInsurance1Page> {
           ),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Error loading insurance calculator',
-          style: TextStyle(color: AppColors.primary),
+          style: GoogleFonts.poppins(
+            color: AppColors.primary,
+            fontSize: 16.0,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );

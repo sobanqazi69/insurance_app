@@ -201,10 +201,14 @@ class _GetInsurance2PageState extends State<GetInsurance2Page> {
           ),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Error loading form',
-          style: TextStyle(color: AppColors.primary),
+          style: GoogleFonts.poppins(
+            color: AppColors.primary,
+            fontSize: 16.0,
+            fontWeight: FontWeight.w400,
+          ),
         ),
       ),
     );

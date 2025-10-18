@@ -46,9 +46,10 @@ class InsuranceProgressIndicator extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(6, (index) {
                 final isActive = index == currentStep - 1; // Current step is active
+                final isCompleted = index < currentStep - 1; // Completed steps
                 return SizedBox(
                   width: stepWidth,
-                  child: _buildProgressStep(context, index + 1, isActive),
+                  child: _buildProgressStep(context, index + 1, isActive, isCompleted),
                 );
               }),
             ),
@@ -58,12 +59,26 @@ class InsuranceProgressIndicator extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressStep(BuildContext context, int stepNumber, bool isActive) {
+  Widget _buildProgressStep(BuildContext context, int stepNumber, bool isActive, bool isCompleted) {
+    Color circleColor;
+    Color textColor;
+    
+    if (isActive) {
+      circleColor = AppColors.cyan;
+      textColor = AppColors.white;
+    } else if (isCompleted) {
+      circleColor = AppColors.primary;
+      textColor = AppColors.white;
+    } else {
+      circleColor = AppColors.border;
+      textColor = AppColors.textSecondary;
+    }
+    
     return Container(
       width: MediaQuery.of(context).size.width * 0.08,
       height: MediaQuery.of(context).size.width * 0.08,
       decoration: BoxDecoration(
-        color: isActive ? AppColors.primary : AppColors.border,
+        color: circleColor,
         shape: BoxShape.circle,
       ),
       child: Center(
@@ -72,7 +87,7 @@ class InsuranceProgressIndicator extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: MediaQuery.of(context).size.height * 0.014,
             fontWeight: FontWeight.w600,
-            color: isActive ? AppColors.white : AppColors.textSecondary,
+            color: textColor,
           ),
         ),
       ),
