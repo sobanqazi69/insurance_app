@@ -15,14 +15,14 @@ class InsuranceProgressIndicator extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final screenWidth = constraints.maxWidth;
-        final stepWidth = screenWidth / 6;
+        final stepWidth = screenWidth / 5;
         final circleSize = MediaQuery.of(context).size.width * 0.08;
         final circleRadius = circleSize / 2;
         
         return Stack(
           children: [
             // Connecting lines between circles
-            ...List.generate(5, (index) {
+            ...List.generate(4, (index) {
               final leftPosition = stepWidth * (index + 0.5) + circleRadius;
               final rightPosition = stepWidth * (index + 1.5) - circleRadius;
               final lineWidth = rightPosition - leftPosition;
@@ -44,7 +44,7 @@ class InsuranceProgressIndicator extends StatelessWidget {
             // Circles
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(6, (index) {
+              children: List.generate(5, (index) {
                 final isActive = index == currentStep - 1; // Current step is active
                 final isCompleted = index < currentStep - 1; // Completed steps
                 return SizedBox(

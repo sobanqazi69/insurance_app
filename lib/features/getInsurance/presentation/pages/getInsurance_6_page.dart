@@ -178,7 +178,7 @@ class _GetInsurance6PageState extends State<GetInsurance6Page> {
               ),
             ),
             child: Text(
-              'Download Receipt',
+              'Download\nReceipt',
               style: GoogleFonts.poppins(
                 fontSize: MediaQuery.of(context).size.height * 0.018,
                 fontWeight: FontWeight.w600,
@@ -191,7 +191,7 @@ class _GetInsurance6PageState extends State<GetInsurance6Page> {
         // Done Button
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.06,
+          height: MediaQuery.of(context).size.height * 0.05,
           child: ElevatedButton(
             onPressed: () => _handleDone(context),
             style: ElevatedButton.styleFrom(
@@ -216,7 +216,7 @@ class _GetInsurance6PageState extends State<GetInsurance6Page> {
         // Inspection Button
         SizedBox(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.06,
+          height: MediaQuery.of(context).size.height * 0.05,
           child: ElevatedButton(
             onPressed: () => _handleInspection(context),
             style: ElevatedButton.styleFrom(

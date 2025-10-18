@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
+import '../../../../shared/services/navigation_service.dart';
+import '../../../policies/presentation/pages/policies_page.dart';
 
 class ClaimsPoliciesSectionWidget extends StatelessWidget {
   const ClaimsPoliciesSectionWidget({super.key});
@@ -36,7 +38,7 @@ class ClaimsPoliciesSectionWidget extends StatelessWidget {
               buttonColor: const Color(0xFFD2691E), // Golden orange/brown color
               onTap: () {
                 debugPrint('My Policies View All tapped');
-                // Handle policies navigation
+                NavigationService.pushTo(context, const PoliciesPage());
               },
             ),
           ],
