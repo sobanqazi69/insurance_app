@@ -5,6 +5,7 @@ import '../../../../core/constants/colors.dart';
 import '../../../../shared/models/insurance_model.dart';
 import '../../../../shared/services/navigation_service.dart';
 import '../../../getInsurance/presentation/pages/getInsurance_1_page.dart';
+import '../../../getInsurance/presentation/utils/bottom_sheet_utils.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final InsuranceModel insurance;
@@ -334,8 +335,8 @@ Widget _buildActionButton(
 
   void _showCompare(BuildContext context) {
     try {
-      debugPrint('Compare feature coming soon');
-      // TODO: Navigate to compare page
+      debugPrint('Compare feature tapped');
+      BottomSheetUtils.showCompareBottomSheet(context);
     } catch (e) {
       debugPrint('Error handling compare: $e');
     }

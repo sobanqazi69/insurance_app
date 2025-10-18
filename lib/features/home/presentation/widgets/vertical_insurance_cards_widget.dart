@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/insurance_card.dart';
 import '../../../../shared/models/insurance_model.dart';
+import '../../../getInsurance/presentation/utils/bottom_sheet_utils.dart';
 
 class VerticalInsuranceCardsWidget extends StatelessWidget {
   const VerticalInsuranceCardsWidget({super.key});
@@ -93,7 +94,7 @@ class VerticalInsuranceCardsWidget extends StatelessWidget {
                       insurance: insurance,
                       onCompare: () {
                         debugPrint('Compare tapped for ${insurance.companyName}');
-                        // Handle compare action
+                        BottomSheetUtils.showCompareBottomSheet(context);
                       },
                     ),
                   );
@@ -359,6 +360,7 @@ class VerticalInsuranceCardsWidget extends StatelessWidget {
       return OutlinedButton(
         onPressed: () {
           debugPrint('Compare tapped');
+          BottomSheetUtils.showCompareBottomSheet(context);
         },
         style: OutlinedButton.styleFrom(
           side: const BorderSide(color: AppColors.compareButton, width: 1.5),

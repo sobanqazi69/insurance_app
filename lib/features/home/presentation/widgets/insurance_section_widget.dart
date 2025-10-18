@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/widgets/insurance_card.dart';
 import '../../../../shared/models/insurance_model.dart';
+import '../../../getInsurance/presentation/utils/bottom_sheet_utils.dart';
 
 class InsuranceSectionWidget extends StatelessWidget {
   const InsuranceSectionWidget({super.key});
@@ -79,7 +80,7 @@ class InsuranceSectionWidget extends StatelessWidget {
                     insurance: insurance,
                     onCompare: () {
                       debugPrint('Compare tapped for ${insurance.companyName}');
-                      // Handle compare action
+                      BottomSheetUtils.showCompareBottomSheet(context);
                     },
                   );
                 } catch (e) {
