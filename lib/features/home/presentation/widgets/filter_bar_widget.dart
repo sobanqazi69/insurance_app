@@ -143,15 +143,28 @@ class FilterBarWidget extends StatelessWidget {
     return Container(
       width: screenWidth * _FilterBarConstants.iconSize,
       height: screenWidth * _FilterBarConstants.iconSize,
-      decoration: BoxDecoration(
-        color: AppColors.white.withOpacity(_FilterBarConstants.iconBackgroundOpacity),
-        borderRadius: BorderRadius.circular(_FilterBarConstants.iconBorderRadius),
-      ),
-      child: SvgPicture.asset(
-        icon,
-      
-      ),
+   
+      child: _buildSafeSvgIcon(icon, screenWidth),
     );
+  }
+
+  /// Builds SVG icon with error handling
+  Widget _buildSafeSvgIcon(String iconPath, double screenWidth) {
+    try {
+      return Image.asset(
+        iconPath,
+        width: screenWidth * _FilterBarConstants.iconInnerSize,
+        height: screenWidth * _FilterBarConstants.iconInnerSize,
+        color: AppColors.white,
+      );
+    } catch (e) {
+      debugPrint('Error loading SVG icon: $iconPath - $e');
+      return Icon(
+        Icons.help_outline,
+        size: screenWidth * _FilterBarConstants.iconInnerSize,
+        color: AppColors.textSecondary,
+      );
+    }
   }
 
   /// Builds the filter label text
@@ -217,11 +230,11 @@ class _FilterBarConstants {
   static const double labelFontSize = 0.014; // 1.4% of screen height
   
   // Filter icons
-  static const String carIcon = 'assets/icons/car-insure.svg';
-  static const String familyIcon = 'assets/icons/family-insure.svg';
-  static const String financeIcon = 'assets/icons/finance-insure.svg';
-  static const String healthIcon = 'assets/icons/health-insure.svg';
-  static const String filtersIcon = 'assets/icons/filter-insure.svg';
+  static const String carIcon = 'assets/icons/car-insure.png';
+  static const String familyIcon = 'assets/icons/family-insure.png';
+  static const String financeIcon = 'assets/icons/policy-insure.png';
+  static const String healthIcon = 'assets/icons/health-insure.png';
+  static const String filtersIcon = 'assets/icons/filter-insure.png';
   
   // Filter labels
   static const String carLabel = 'Car';
