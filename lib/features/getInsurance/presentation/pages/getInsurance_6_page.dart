@@ -21,6 +21,7 @@ class _GetInsurance6PageState extends State<GetInsurance6Page> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: _buildBody(context),
       );

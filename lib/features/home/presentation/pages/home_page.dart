@@ -59,6 +59,7 @@ class _HomePageState extends State<HomePage> {
     try {
       return Scaffold(
         backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: _buildBottomNavigationBar(),

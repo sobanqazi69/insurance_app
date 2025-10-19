@@ -29,6 +29,7 @@ class _Claim3PageState extends State<Claim3Page> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         body: _buildBody(context),
       );
     } catch (e) {

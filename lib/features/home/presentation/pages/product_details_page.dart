@@ -56,6 +56,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: _buildBody(context),
       );

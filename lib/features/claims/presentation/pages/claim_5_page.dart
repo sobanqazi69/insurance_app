@@ -31,6 +31,7 @@ class _Claim5PageState extends State<Claim5Page> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         body: _buildBody(context),
       );
     } catch (e) {

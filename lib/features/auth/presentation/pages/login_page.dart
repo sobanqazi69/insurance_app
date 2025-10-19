@@ -138,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: AuthBackground(
           child: SafeArea(
             child: SingleChildScrollView(

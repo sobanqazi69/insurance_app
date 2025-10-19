@@ -21,6 +21,7 @@ class _Claim4PageState extends State<Claim4Page> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         body: _buildBody(context),
       );
     } catch (e) {

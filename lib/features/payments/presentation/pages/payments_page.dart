@@ -6,6 +6,7 @@ class PaymentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: const Text('Payments')),
       body: const Center(child: Text('Payments Page')),
     );

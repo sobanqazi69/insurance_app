@@ -16,6 +16,9 @@ class _ClaimTrackingPageState extends State<ClaimTrackingPage> {
   Widget build(BuildContext context) {
     try {
       return Scaffold(
+                resizeToAvoidBottomInset: false,
+
+        
         backgroundColor: AppColors.white,
         body: _buildBody(context),
       );

@@ -17,6 +17,7 @@ class _PoliciesPageState extends State<PoliciesPage> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: _buildBody(context),
       );

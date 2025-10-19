@@ -59,6 +59,7 @@ class _GetInsurance2PageState extends State<GetInsurance2Page> {
     try {
       return Scaffold(
         backgroundColor: AppColors.white,
+        resizeToAvoidBottomInset: false,
         appBar: _buildAppBar(context),
         body: _buildBody(context),
       );

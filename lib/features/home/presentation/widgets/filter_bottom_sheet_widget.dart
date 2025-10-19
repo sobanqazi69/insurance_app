@@ -282,7 +282,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
             ),
             SizedBox(width: screenHeight * 0.02),
             Text(
-              'Total: ${_sumInsuredRange.end.round()} \$',
+              'Total: Rs ${_sumInsuredRange.end.round()}',
               style: GoogleFonts.inter(
                 fontSize: screenHeight * 0.014,
                 fontWeight: FontWeight.w500,
@@ -324,7 +324,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     Padding(
                       padding: EdgeInsets.only(left: screenHeight * 0.015),
                       child: Text(
-                        '\$',
+                        'Rs',
                         style: GoogleFonts.inter(
                           fontSize: screenHeight * 0.016,
                           color: AppColors.textPrimary,
@@ -352,7 +352,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     Padding(
                       padding: EdgeInsets.only(right: screenHeight * 0.015),
                       child: Text(
-                        'USD',
+                        'PKR',
                         style: GoogleFonts.inter(
                           fontSize: screenHeight * 0.014,
                           color: AppColors.textSecondary,
@@ -384,7 +384,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     Padding(
                       padding: EdgeInsets.only(left: screenHeight * 0.015),
                       child: Text(
-                        '\$',
+                        'Rs',
                         style: GoogleFonts.inter(
                           fontSize: screenHeight * 0.016,
                           color: AppColors.textPrimary,
@@ -412,7 +412,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                     Padding(
                       padding: EdgeInsets.only(right: screenHeight * 0.015),
                       child: Text(
-                        'USD',
+                        'PKR',
                         style: GoogleFonts.inter(
                           fontSize: screenHeight * 0.014,
                           color: AppColors.textSecondary,
@@ -436,7 +436,7 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Tenor',
+          'Tenure',
           style: GoogleFonts.inter(
             fontSize: screenHeight * 0.018,
             fontWeight: FontWeight.w600,
@@ -458,6 +458,9 @@ class _FilterBottomSheetWidgetState extends State<FilterBottomSheetWidget> {
                 padding: EdgeInsets.symmetric(
                   horizontal: screenHeight * 0.015,
                   vertical: screenHeight * 0.01,
+                ),
+                margin: EdgeInsets.only(
+                  bottom: screenHeight * 0.01,
                 ),
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.transparent : AppColors.borderLight,
@@ -741,9 +744,9 @@ class _FilterConstants {
   static const String insurerPlaceholder = 'Name';
   static const String excessPlaceholder = 'Excess';
   static const String addonsPlaceholder = 'Add-Ons';
-  static const String currencySymbol = '\$';
-  static const String currencyCode = 'USD';
+  static const String currencySymbol = 'Rs';
+  static const String currencyCode = 'PKR';
   static const String rangeSeparator = '-';
   static const String totalPrefix = 'Total: ';
-  static const String totalSuffix = ' \$';
+  static const String totalSuffix = ' Rs';
 }

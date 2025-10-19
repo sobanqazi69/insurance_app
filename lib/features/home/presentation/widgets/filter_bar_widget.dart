@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/colors.dart';
 import 'filter_bottom_sheet_widget.dart';
@@ -112,7 +113,7 @@ class FilterBarWidget extends StatelessWidget {
   /// Builds an individual filter item with icon and label
   Widget _buildFilterItem({
     required BuildContext context,
-    required IconData icon,
+    required String icon,
     required String label,
     VoidCallback? onTap,
   }) {
@@ -138,7 +139,7 @@ class FilterBarWidget extends StatelessWidget {
   }
 
   /// Builds the filter icon container
-  Widget _buildFilterIcon(double screenWidth, IconData icon) {
+  Widget _buildFilterIcon(double screenWidth, String icon) {
     return Container(
       width: screenWidth * _FilterBarConstants.iconSize,
       height: screenWidth * _FilterBarConstants.iconSize,
@@ -146,10 +147,9 @@ class FilterBarWidget extends StatelessWidget {
         color: AppColors.white.withOpacity(_FilterBarConstants.iconBackgroundOpacity),
         borderRadius: BorderRadius.circular(_FilterBarConstants.iconBorderRadius),
       ),
-      child: Icon(
+      child: SvgPicture.asset(
         icon,
-        color: AppColors.white,
-        size: screenWidth * _FilterBarConstants.iconInnerSize,
+      
       ),
     );
   }
@@ -217,11 +217,11 @@ class _FilterBarConstants {
   static const double labelFontSize = 0.014; // 1.4% of screen height
   
   // Filter icons
-  static const IconData carIcon = Icons.directions_car;
-  static const IconData familyIcon = Icons.family_restroom;
-  static const IconData financeIcon = Icons.account_balance;
-  static const IconData healthIcon = Icons.health_and_safety;
-  static const IconData filtersIcon = Icons.tune;
+  static const String carIcon = 'assets/icons/car-insure.svg';
+  static const String familyIcon = 'assets/icons/family-insure.svg';
+  static const String financeIcon = 'assets/icons/finance-insure.svg';
+  static const String healthIcon = 'assets/icons/health-insure.svg';
+  static const String filtersIcon = 'assets/icons/filter-insure.svg';
   
   // Filter labels
   static const String carLabel = 'Car';
