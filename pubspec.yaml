@@ -85,7 +85,7 @@ dependencies:
 
   # PDF & Documents
   pdf: ^3.10.7
-  printing: ^5.11.1
+  # printing: ^5.11.1
 
   # QR Code & Barcode
   qr_flutter: ^4.1.0
